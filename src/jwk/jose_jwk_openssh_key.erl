@@ -128,9 +128,9 @@ parse_key(<< W, Rest/binary >>, Body)
 	parse_key(Rest, Body);
 parse_key(<< ?OPENSSH_TAIL, Rest/binary >>, Body) ->
 	case parse_key(jose_base64:decode(Body)) of
-		{true, Key} ->
+		{ok, Key} ->
 			{Key, Rest};
-		false ->
+		error ->
 			Rest
 	end;
 parse_key(<< C, Rest/binary >>, Body) ->
